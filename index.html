@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hälsokollen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="bilder/logan.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.typekit.net/tum1zgk.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6286207902976437" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gradient-to-r from-green-200 via-blue-200 to-purple-300 min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    <header class="text-center p-6">
+        <a href="">
+            <img src="bilder/headerlogan.png" alt="Logo" class="h-16 w-auto mx-auto mb-4">
+        </a>
+        <h1 class="text-4xl font-bold text-gray-800 mb-2">Välkommen till Hälsokollen</h1>
+        <p class="text-lg text-gray-600">Håll koll på din hälsa med våra verktyg!</p>
+    </header>
+
+    <div class="container bg-white rounded-lg shadow-2xl p-8 my-8 w-full max-w-4xl">
+        <section class="overview mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Om hemsidan</h2>
+            <p class="text-gray-700 leading-relaxed">
+                Hälsokollen är en sida gjord för att du ska må bra fysisk. Välj några av verktygen nedan för att komma igång! BMI-kalkylatorn beräknar om du är i bra skick kroppsvis. Stegräknaren säger om du har gått en bra mängd steg per dag, och samma med kaloriräknaren. Alla dessa funktioner är i "Alpha"-stadiet, så de kan vara lite buggiga. Fler uppdateringar kommer!
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <a href="#bmikalkylator" class="bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105 text-center">BMI Kalkylator</a>
+                <a href="#stegraknare" class="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 text-center">Stegräknare</a>
+                <a href="#kaloriraknare" class="bg-purple-500 text-white px-6 py-4 rounded-lg shadow-lg hover:bg-purple-600 transition-transform transform hover:scale-105 text-center">Kaloriräknare</a>
+                <a href="#tinkercad3d" class="bg-orange-500 text-white px-6 py-4 rounded-lg shadow-lg hover:bg-orange-600 transition-transform transform hover:scale-105 text-center">3D Design</a>
+            </div>
+        </section>
+
+        <section id="bmikalkylator" class="tool-section mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">BMI Kalkylator</h2>
+            <p class="text-gray-700 mb-4">Ange din längd och vikt för att beräkna ditt BMI</p>
+            <label for="height" class="block text-gray-700">Längd (cm):</label>
+            <input type="number" id="height" placeholder="Ange din längd" class="w-full px-4 py-2 border rounded-lg mt-2">
+            <label for="weight" class="block text-gray-700 mt-4">Vikt (kg):</label>
+            <input type="number" id="weight" placeholder="Ange din vikt" class="w-full px-4 py-2 border rounded-lg mt-2">
+            <button onclick="calculateBMI()" class="bg-blue-500 text-white px-6 py-2 rounded-lg mt-4 hover:bg-blue-600 transition-colors">Beräkna BMI</button>
+            <div class="result mt-4 font-bold" id="bmiResult"></div>
+        </section>
+
+        <section id="stegraknare" class="tool-section mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Stegräknare</h2>
+            <p class="text-gray-700 mb-4">Här kan du hålla koll på dina dagliga steg</p>
+            <label for="steps" class="block text-gray-700">Antal steg:</label>
+            <input type="number" id="steps" placeholder="Ange dagens steg" class="w-full px-4 py-2 border rounded-lg mt-2">
+            <button onclick="trackSteps()" class="bg-green-500 text-white px-6 py-2 rounded-lg mt-4 hover:bg-green-600 transition-colors">Spara steg</button>
+            <div class="result mt-4 font-bold" id="stepsResult"></div>
+            <div id="stepsList" class="mt-4"></div>
+        </section>
+
+        <section id="kaloriraknare" class="tool-section mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Kaloriräknare</h2>
+            <p class="text-gray-700 mb-4">Räkna ut dina dagliga kalorier</p>
+            <label for="calories" class="block text-gray-700">Kaloriintag (kcal):</label>
+            <input type="number" id="calories" placeholder="Ange kalorier du ätit idag" class="w-full px-4 py-2 border rounded-lg mt-2">
+            <button onclick="trackCalories()" class="bg-purple-500 text-white px-6 py-2 rounded-lg mt-4 hover:bg-purple-600 transition-colors">Spara kalorier</button>
+            <div class="result mt-4 font-bold" id="caloriesResult"></div>
+            <div id="caloriesList" class="mt-4"></div>
+        </section>
+
+        <section id="tinkercad3d" class="tool-section mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">3D Design</h2>
+            <p class="text-gray-700 mb-4">
+                Handheld enhet gjord i hemsidan TinkerCad. Denna enhet ska vara batteridriven och innehålla en ESP32 för bearbetning. ESP32 erbjuder också Bluetooth så man kan koppla den till mobilen.
+            </p>
+            <iframe width="725" height="453" src="https://www.tinkercad.com/embed/l2c2eOaMZDI?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" class="w-full"></iframe>
+        </section>
+    </div>
+
+    <footer class="absolute bottom-4 text-gray-700 text-center">
+        Made with <span class="text-pink-300">&#128157;</span> by Shant and Claudius
+        <br>
+        <button class="about-btn bg-white text-gray-800 px-4 py-2 rounded-lg mt-2 hover:bg-gray-100 transition-colors" onclick="toggleCredits()">About</button>
+    </footer>
+
+    <!-- Cookie Consent Popup -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 flex justify-between items-center">
+        <p>Denna webbplats använder cookies för att spara dina steg och kalorier. Genom att fortsätta använda webbplatsen godkänner du detta.</p>
+        <button id="accept-cookies" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Godkänn</button>
+    </div>
+
+    <!-- Popup for Credits -->
+    <div class="popup hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="popup-content bg-white p-8 rounded-lg max-w-md relative">
+            <span class="close absolute top-4 right-4 text-2xl cursor-pointer" onclick="toggleCredits()">&times;</span>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Credits</h3>
+            <p class="text-gray-700 mb-4">Gjord av Shant och Claudius</p>
+            <p class="text-gray-700 mb-4">SkolProject, hemsidan är renskriven utan någon annan hemsida eller app, Gjort på HTML, CSS och Javascript, <a href="https://youtu.be/ImVQVSLcgbs" target="_blank" class="text-blue-500 hover:underline">Hälsokollen infomerical</a></p>
+            <p class="text-gray-700 mb-4">Med hjälp av <a href="https://chatgpt.com/" target="_blank" class="text-blue-500 hover:underline">ChatGPT</a> för Javascript Koding</p>
+            <p class="text-gray-700 mb-4"> Domain namn köpt från <a href="https://www.namecheap.com/" target="_blank" class="text-blue-500 hover:underline">Namecheap</a></p>
+            <p class="text-gray-700 mb-4"> Hosting av <a href="https://github.com/ttvhipo/HalsoKollen/" target="_blank" class="text-blue-500 hover:underline">Github</a>, Allt är opensource, så du kan gå in och checka på koden!</p>
+            <p class="text-gray-700 mb-4"> Finns även APK och EXE versioner av hemsidan, Allt finns på Github</p>
+            <p class="text-gray-700 mb-4"> För att ha hemsidan som en app på iPhone, Gå in på hemsidan tryck på share knappen, skrolla sedan ner och tryck på "Add To Home Screen"</p>
+            <p class="text-gray-700 mb-4"> Integration av Annonser 2024-12-19</p>
+            <p class="text-gray-700">Senaste uppdatering: 2024-12-19</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
